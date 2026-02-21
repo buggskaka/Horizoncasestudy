@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pay & Benefits - Remote People</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #F5F7FA;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --text: #1E293B;
+      --text-secondary: #64748B;
+      --text-tertiary: #94A3B8;
+      --primary: #3B82F6;
+      --primary-dark: #2563EB;
+      --primary-fg: #FFFFFF;
+      --primary-light: #EFF6FF;
+      --primary-border: #BFDBFE;
+      --green: #16A34A;
+      --green-bg: #F0FDF4;
+      --green-border: #BBF7D0;
+      --amber: #D97706;
+      --amber-bg: #FFFBEB;
+      --amber-border: #FDE68A;
+      --amber-light: #F59E0B;
+      --readonly: #F8FAFC;
+      --readonly-text: #475569;
+      --accent-bar: #3B82F6;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Top blue accent bar */
+    .top-accent {
+      height: 4px;
+      background: var(--accent-bar);
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+    }
+
+    .progress-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 0 20px;
+    }
+
+    .progress-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+    }
+
+    .step.active {
+      color: var(--primary);
+    }
+
+    .step.warning {
+      color: var(--amber);
+    }
+
+    .step-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .step.active .step-dot {
+      background: var(--primary);
+      color: var(--primary-fg);
+    }
+
+    .step.warning .step-dot {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1.5px solid var(--amber-border);
+      font-size: 10px;
+    }
+
+    .step-connector {
+      width: 28px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 6px;
+      flex-shrink: 0;
+    }
+
+    /* Left blue accent on sections */
+    .section-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--primary);
+      border-radius: 12px 0 0 12px;
+    }
+
+    /* Main content */
+    .main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 32px 24px 100px;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: visible;
+      position: relative;
+    }
+
+    .section.has-accent {
+      border-left: 4px solid var(--primary);
+    }
+
+    .section-header {
+      padding: 24px 28px 16px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .section-title .optional-tag {
+      font-weight: 400;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .section-body {
+      padding: 0 28px 24px;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 28px;
+    }
+
+    /* Field */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .field-hint {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-prefix {
+      position: absolute;
+      left: 14px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 60px 12px 30px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    .currency-suffix {
+      position: absolute;
+      right: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    /* TCOE Panel */
+    .tcoe-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .tcoe-panel.visible {
+      border-color: var(--primary-border);
+    }
+
+    .tcoe-header {
+      padding: 18px 28px;
+      background: var(--primary-light);
+      border-bottom: 1px solid var(--primary-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tcoe-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tcoe-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tcoe-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tcoe-sublabel {
+      font-size: 12px;
+      color: var(--primary);
+      opacity: 0.7;
+      margin-top: 1px;
+    }
+
+    .tcoe-total-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: white;
+      border: 1px solid var(--primary-border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      transition: all 0.2s ease;
+    }
+
+    .tcoe-body {
+      padding: 0 28px;
+    }
+
+    .tcoe-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .tcoe-row:last-child {
+      border-bottom: none;
+    }
+
+    .tcoe-row-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tcoe-row-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .tcoe-row-detail {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    .tcoe-row-amount {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .tcoe-row-amount.readonly {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .tcoe-row-tag {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+
+    .tag-statutory {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .tag-fee {
+      background: #F0EDF8;
+      color: #5B3FA0;
+    }
+
+    .tag-user {
+      background: var(--amber-bg);
+      color: var(--amber);
+    }
+
+    .tcoe-footer {
+      padding: 16px 28px;
+      background: var(--readonly);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tcoe-footer-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .tcoe-footer-amount {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      transition: all 0.2s;
+    }
+
+    .tcoe-footer-annual {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+      text-align: right;
+    }
+
+    /* Allowances table */
+    .allowances-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .allowances-table thead th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 0 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .allowances-table thead th:last-child {
+      text-align: right;
+    }
+
+    .allowances-table tbody td {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .allowances-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .allowance-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .allowance-hint {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    .allowance-hint.warning {
+      color: var(--amber);
+      font-style: normal;
+    }
+
+    .allowance-input-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .allowance-input-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .allowance-input-prefix {
+      position: absolute;
+      left: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .allowance-input {
+      width: 130px;
+      padding: 9px 40px 9px 24px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      text-align: right;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -moz-appearance: textfield;
+    }
+
+    .allowance-input::-webkit-outer-spin-button,
+    .allowance-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .allowance-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    .allowance-input.warning-input {
+      border-color: var(--amber-border);
+      background: var(--amber-bg);
+    }
+
+    .allowance-input-suffix {
+      position: absolute;
+      right: 10px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    /* Benchmark pill */
+    .benchmark-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 4px;
+      cursor: default;
+    }
+
+    .benchmark-pill.ok {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .benchmark-pill.low {
+      background: var(--amber-bg);
+      color: var(--amber);
+    }
+
+    .benchmark-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Add Custom Allowance button */
+    .add-allowance-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 16px;
+      margin-top: 12px;
+      border: 2px dashed var(--border-main);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .add-allowance-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-bg);
+    }
+
+    .add-allowance-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* Custom allowance row */
+    .custom-allowance-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-main);
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .custom-allowance-row .custom-name-input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border-main);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    .custom-allowance-row .custom-name-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .custom-allowance-row .custom-name-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .custom-allowance-row .allowance-input-container {
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .remove-allowance-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-top: 2px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-tertiary);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .remove-allowance-btn:hover {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    /* Info callout */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 16px;
+    }
+
+    .callout.info {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      font-size: 15px;
+      margin-top: 1px;
+    }
+
+    .placeholder-text {
+      text-align: center;
+      padding: 40px 28px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .placeholder-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 36px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-fg);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+    }
+
+    /* Animate in */
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeSlideIn 0.25s ease forwards;
+    }
+
+    .tcoe-row {
+      animation: fadeSlideIn 0.2s ease forwards;
+    }
+
+    .tcoe-row:nth-child(1) {
+      animation-delay: 0.02s;
+    }
+
+    .tcoe-row:nth-child(2) {
+      animation-delay: 0.04s;
+    }
+
+    .tcoe-row:nth-child(3) {
+      animation-delay: 0.06s;
+    }
+
+    .tcoe-row:nth-child(4) {
+      animation-delay: 0.08s;
+    }
+
+    .tcoe-row:nth-child(5) {
+      animation-delay: 0.10s;
+    }
+
+    .tcoe-row:nth-child(6) {
+      animation-delay: 0.12s;
+    }
+
+    .tcoe-row:nth-child(7) {
+      animation-delay: 0.14s;
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      .main {
+        padding: 20px 12px 100px;
+      }
+
+      .section-header,
+      .section-body,
+      .tcoe-header,
+      .tcoe-body,
+      .tcoe-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .steps {
+        gap: 0;
+        font-size: 11px;
+      }
+
+      .step {
+        font-size: 11px;
+        gap: 4px;
+      }
+
+      .step-connector {
+        width: 16px;
+        margin: 0 2px;
+      }
+
+      .allowance-input {
+        width: 110px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top blue accent -->
+  <div class="top-accent"></div>
+
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="progress-inner">
+      <div class="progress-title">New Hire in Germany</div>
+      <div class="steps">
+        <div class="step warning">
+          <div class="step-dot">▲</div>
+          Employee
+        </div>
+        <div class="step-connector"></div>
+        <div class="step warning">
+          <div class="step-dot">▲</div>
+          Position
+        </div>
+        <div class="step-connector"></div>
+        <div class="step active">
+          <div class="step-dot">3</div>
+          Pay &amp; Benefits
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-dot">4</div>
+          Terms
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-dot">5</div>
+          Review
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Basic Pay -->
+    <div class="section has-accent animate-in">
+      <div class="section-header">
+        <div class="section-title">Basic Pay</div>
+        <div class="section-desc">Set salaries and other regular payments.</div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">Annual gross salary</label>
+          <div class="input-wrap">
+            <span class="currency-prefix">€</span>
+            <input type="number" id="grossSalary" placeholder="0.00" value="" min="0" step="1000"
+              oninput="recalculate()">
+            <span class="currency-suffix">EUR</span>
+          </div>
+          <div class="field-hint">Payable in 12 months.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TCOE Breakdown (stays after Basic Pay) -->
+    <div class="tcoe-panel" id="tcoePanel">
+      <div id="tcoePlaceholder" class="placeholder-text">
+        <div class="placeholder-icon">🧮</div>
+        Enter a gross salary above to see your <strong>Total Cost of Employment</strong> broken down in real time.
+      </div>
+
+      <div id="tcoeContent" style="display:none;">
+        <div class="tcoe-header">
+          <div class="tcoe-header-left">
+            <div class="tcoe-icon">€</div>
+            <div>
+              <div class="tcoe-label">Total Cost of Employment</div>
+              <div class="tcoe-sublabel">Germany · Updated in real time</div>
+            </div>
+          </div>
+          <div class="tcoe-total-badge" id="tcoeBadge">€0 / mo</div>
+        </div>
+
+        <div class="tcoe-body">
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Annual gross salary <span class="tcoe-row-tag tag-user">You set this</span>
+              </div>
+              <div class="tcoe-row-detail">Base compensation agreed with employee</div>
+            </div>
+            <div class="tcoe-row-amount" id="r-gross">€0</div>
+          </div>
+
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Pension insurance <span class="tcoe-row-tag tag-statutory">Statutory</span>
+              </div>
+              <div class="tcoe-row-detail">Rentenversicherung · 9.3% employer share</div>
+            </div>
+            <div class="tcoe-row-amount readonly" id="r-pension">€0</div>
+          </div>
+
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Health insurance <span class="tcoe-row-tag tag-statutory">Statutory</span>
+              </div>
+              <div class="tcoe-row-detail">Krankenversicherung · 7.3% employer share</div>
+            </div>
+            <div class="tcoe-row-amount readonly" id="r-health">€0</div>
+          </div>
+
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Unemployment insurance <span
+                  class="tcoe-row-tag tag-statutory">Statutory</span></div>
+              <div class="tcoe-row-detail">Arbeitslosenversicherung · 1.3% employer share</div>
+            </div>
+            <div class="tcoe-row-amount readonly" id="r-unemployment">€0</div>
+          </div>
+
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Long-term care insurance <span
+                  class="tcoe-row-tag tag-statutory">Statutory</span></div>
+              <div class="tcoe-row-detail">Pflegeversicherung · 1.7% employer share</div>
+            </div>
+            <div class="tcoe-row-amount readonly" id="r-care">€0</div>
+          </div>
+
+          <div class="tcoe-row">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">EOR service fee <span class="tcoe-row-tag tag-fee">Remote People</span></div>
+              <div class="tcoe-row-detail">Based on your current plan</div>
+            </div>
+            <div class="tcoe-row-amount readonly" id="r-fee">€0</div>
+          </div>
+
+          <div class="tcoe-row" id="allowanceRow" style="display:none;">
+            <div class="tcoe-row-left">
+              <div class="tcoe-row-name">Allowances <span class="tcoe-row-tag tag-user">You set this</span></div>
+              <div class="tcoe-row-detail" id="allowanceDetail">Optional additions</div>
+            </div>
+            <div class="tcoe-row-amount" id="r-allowances">€0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Allowances -->
+    <div class="section animate-in" style="animation-delay: 0.05s;">
+      <div class="section-header">
+        <div class="section-title">Allowances <span class="optional-tag">(optional)</span></div>
+        <div class="section-desc">If local regulations require any mandatory allowance declaration, it is already
+          included in the annual gross pay. This extra allowance is for purely discretionary purposes.</div>
+      </div>
+      <div class="section-body">
+        <table class="allowances-table">
+          <thead>
+            <tr>
+              <th>Allowance type</th>
+              <th style="text-align:right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="allowance-name">Phone Allowance</div>
+                <div class="allowance-hint">The minimum amount is EUR 0 but there is no maximum amount.</div>
+                <div id="phone-benchmark"></div>
+              </td>
+              <td>
+                <div class="allowance-input-wrap">
+                  <div class="allowance-input-container">
+                    <span class="allowance-input-prefix">€</span>
+                    <input type="number" class="allowance-input" id="a-phone" placeholder="0.00" min="0"
+                      oninput="updateAllowance('phone', this.value, 20, 60)">
+                    <span class="allowance-input-suffix">EUR</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="allowance-name">Pension Allowance</div>
+                <div class="allowance-hint">The minimum amount is EUR 0 but there is no maximum amount.</div>
+                <div id="pension-benchmark"></div>
+              </td>
+              <td>
+                <div class="allowance-input-wrap">
+                  <div class="allowance-input-container">
+                    <span class="allowance-input-prefix">€</span>
+                    <input type="number" class="allowance-input" id="a-pension" placeholder="0.00" min="0"
+                      oninput="updateAllowance('pension-allowance', this.value, 50, 300)">
+                    <span class="allowance-input-suffix">EUR</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="allowance-name">Work-from-home Allowance</div>
+                <div class="allowance-hint">The minimum amount is EUR 0 but there is no maximum amount.</div>
+                <div id="wfh-benchmark"></div>
+              </td>
+              <td>
+                <div class="allowance-input-wrap">
+                  <div class="allowance-input-container">
+                    <span class="allowance-input-prefix">€</span>
+                    <input type="number" class="allowance-input" id="a-wfh" placeholder="0.00" min="0"
+                      oninput="updateAllowance('wfh', this.value, 20, 80)">
+                    <span class="allowance-input-suffix">EUR</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Custom allowances added dynamically -->
+        <div id="customAllowancesContainer"></div>
+
+        <button type="button" class="add-allowance-btn" onclick="addCustomAllowance()">
+          <span class="add-allowance-icon">+</span>
+          Add Custom Allowance
+        </button>
+      </div>
+    </div>
+
+    <!-- TCOE Footer (after Allowances) -->
+    <div id="tcoeFooterSection" class="tcoe-panel" style="display:none; border-color: var(--primary-border);">
+      <div class="tcoe-footer" style="border-top: none;">
+        <div>
+          <div class="tcoe-footer-label">Total Cost of Employment</div>
+        </div>
+        <div>
+          <div class="tcoe-footer-amount" id="tcoeFinal">€0</div>
+          <div class="tcoe-footer-annual" id="tcoeAnnual">per year</div>
+        </div>
+      </div>
+
+      <div style="padding: 0 28px 20px;">
+        <div class="callout info">
+          <div class="callout-icon">ℹ️</div>
+          <div>Statutory contributions are calculated on gross salary up to the German contribution ceiling
+            (€7,550/month for pension and unemployment; €5,175/month for health and care). These rates are maintained
+            automatically and reflect current German law.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="section animate-in" style="animation-delay: 0.15s;">
+      <div class="section-header">
+        <div class="section-title">Benefits</div>
+        <div class="section-desc">We offer custom benefit options to retain talents.</div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">Other Benefits (optional)</label>
+          <textarea id="otherBenefits" placeholder="Please add any special request."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="alert('Continuing to Terms step...')">Continue →</button>
+  </div>
+
+  <script>
+    // German contribution rates (2024)
+    const PENSION_RATE = 0.093;
+    const HEALTH_RATE = 0.073;
+    const UNEMPLOYMENT_RATE = 0.013;
+    const CARE_RATE = 0.017;
+    const EOR_FEE_RATE = 0.07;
+
+    // Contribution ceilings (monthly)
+    const PENSION_CEILING_MONTHLY = 7550;
+    const HEALTH_CEILING_MONTHLY = 5175;
+
+    let allowances = { phone: 0, 'pension-allowance': 0, wfh: 0 };
+
+    function fmt(n) {
+      return '€' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function recalculate() {
+      const grossAnnual = parseFloat(document.getElementById('grossSalary').value) || 0;
+      const grossMonthly = grossAnnual / 12;
+
+      if (grossAnnual === 0) {
+        document.getElementById('tcoePlaceholder').style.display = '';
+        document.getElementById('tcoeContent').style.display = 'none';
+        document.getElementById('tcoePanel').classList.remove('visible');
+        document.getElementById('tcoeFooterSection').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('tcoePlaceholder').style.display = 'none';
+      document.getElementById('tcoeContent').style.display = '';
+      document.getElementById('tcoePanel').classList.add('visible');
+      document.getElementById('tcoeFooterSection').style.display = '';
+
+      // Apply ceilings
+      const pensionBase = Math.min(grossMonthly, PENSION_CEILING_MONTHLY) * 12;
+      const healthBase = Math.min(grossMonthly, HEALTH_CEILING_MONTHLY) * 12;
+
+      const pension = pensionBase * PENSION_RATE;
+      const health = healthBase * HEALTH_RATE;
+      const unemployment = pensionBase * UNEMPLOYMENT_RATE;
+      const care = healthBase * CARE_RATE;
+      const eorFee = grossAnnual * EOR_FEE_RATE;
+
+      const totalAllowancesMonthly = Object.values(allowances).reduce((a, b) => a + b, 0);
+      const totalCustomMonthly = typeof customAllowances !== 'undefined' ? Object.values(customAllowances).reduce((a, b) => a + b, 0) : 0;
+      const totalAllowancesAnnual = (totalAllowancesMonthly + totalCustomMonthly) * 12;
+
+      const tcoe = grossAnnual + pension + health + unemployment + care + eorFee + totalAllowancesAnnual;
+      const tcoeMonthly = tcoe / 12;
+
+      // Update rows
+      document.getElementById('r-gross').textContent = fmt(grossAnnual);
+      document.getElementById('r-pension').textContent = fmt(pension);
+      document.getElementById('r-health').textContent = fmt(health);
+      document.getElementById('r-unemployment').textContent = fmt(unemployment);
+      document.getElementById('r-care').textContent = fmt(care);
+      document.getElementById('r-fee').textContent = fmt(eorFee);
+
+      if (totalAllowancesAnnual > 0) {
+        document.getElementById('allowanceRow').style.display = '';
+        document.getElementById('r-allowances').textContent = fmt(totalAllowancesAnnual);
+        document.getElementById('allowanceDetail').textContent = fmt(totalAllowancesMonthly) + '/mo across all allowances';
+      } else {
+        document.getElementById('allowanceRow').style.display = 'none';
+      }
+
+      document.getElementById('tcoeFinal').textContent = fmt(tcoe);
+      document.getElementById('tcoeBadge').textContent = fmt(tcoeMonthly) + ' / mo';
+      document.getElementById('tcoeAnnual').textContent = fmt(tcoe) + ' per year';
+    }
+
+    function updateAllowance(key, value, marketMin, marketMax) {
+      const val = parseFloat(value) || 0;
+      allowances[key] = val;
+
+      // Map keys to benchmark element ids
+      const benchmarkMap = {
+        'phone': 'phone-benchmark',
+        'pension-allowance': 'pension-benchmark',
+        'wfh': 'wfh-benchmark'
+      };
+
+      const inputMap = {
+        'phone': 'a-phone',
+        'pension-allowance': 'a-pension',
+        'wfh': 'a-wfh'
+      };
+
+      const benchmarkEl = document.getElementById(benchmarkMap[key]);
+      const inputEl = document.getElementById(inputMap[key]);
+
+      if (val > 0 && marketMax < 999999) {
+        if (val < marketMin) {
+          benchmarkEl.innerHTML = '<span class="benchmark-pill low"><span class="benchmark-dot"></span>Below market range (€' + marketMin + ' – €' + marketMax + '/mo)</span>';
+          inputEl.classList.add('warning-input');
+        } else if (val >= marketMin && val <= marketMax) {
+          benchmarkEl.innerHTML = '<span class="benchmark-pill ok"><span class="benchmark-dot"></span>Within market range</span>';
+          inputEl.classList.remove('warning-input');
+        } else {
+          benchmarkEl.innerHTML = '<span class="benchmark-pill ok"><span class="benchmark-dot"></span>Above market range</span>';
+          inputEl.classList.remove('warning-input');
+        }
+      } else {
+        if (benchmarkEl) benchmarkEl.innerHTML = '';
+        if (inputEl) inputEl.classList.remove('warning-input');
+      }
+
+      recalculate();
+    }
+
+    // Custom allowances
+    let customAllowanceCount = 0;
+    let customAllowances = {};
+
+    function addCustomAllowance() {
+      customAllowanceCount++;
+      const id = 'custom-' + customAllowanceCount;
+      customAllowances[id] = 0;
+
+      const container = document.getElementById('customAllowancesContainer');
+      const row = document.createElement('div');
+      row.className = 'custom-allowance-row';
+      row.id = 'row-' + id;
+      row.innerHTML =
+        '<input type="text" class="custom-name-input" placeholder="Allowance name (e.g. Sign-on Bonus, Relocation)">' +
+        '<div class="allowance-input-container">' +
+        '<span class="allowance-input-prefix">€</span>' +
+        '<input type="number" class="allowance-input" placeholder="0.00" min="0" oninput="updateCustomAllowance(\'' + id + '\', this.value)">' +
+        '<span class="allowance-input-suffix">EUR</span>' +
+        '</div>' +
+        '<button type="button" class="remove-allowance-btn" onclick="removeCustomAllowance(\'' + id + '\')" title="Remove">×</button>';
+      container.appendChild(row);
+      row.querySelector('.custom-name-input').focus();
+    }
+
+    function updateCustomAllowance(id, value) {
+      customAllowances[id] = parseFloat(value) || 0;
+      recalculate();
+    }
+
+    function removeCustomAllowance(id) {
+      const row = document.getElementById('row-' + id);
+      if (row) row.remove();
+      delete customAllowances[id];
+      recalculate();
+    }
+  </script>
+
+</body>
+
+</html>
