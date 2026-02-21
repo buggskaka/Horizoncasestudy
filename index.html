@@ -596,14 +596,18 @@
       background: currentColor;
     }
 
-    /* Add Custom Allowance button */
+    /* Allowance dropdown */
+    .add-allowance-wrap {
+      position: relative;
+      margin-top: 16px;
+    }
+
     .add-allowance-btn {
       display: flex;
       align-items: center;
       gap: 8px;
       width: 100%;
-      padding: 14px 16px;
-      margin-top: 12px;
+      padding: 12px 16px;
       border: 2px dashed var(--border-main);
       border-radius: 10px;
       background: transparent;
@@ -624,25 +628,117 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: var(--primary);
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
     }
 
-    /* Custom allowance row */
-    .custom-allowance-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border-main);
-      animation: fadeIn 0.25s ease;
+    .dropdown-panel {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: calc(100% + 6px);
+      background: #fff;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      z-index: 100;
+      max-height: 320px;
+      overflow: hidden;
+      flex-direction: column;
     }
 
+    .dropdown-panel.open {
+      display: flex;
+    }
+
+    .dropdown-search-wrap {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-main);
+    }
+
+    .dropdown-search {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border-main);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: var(--font);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .dropdown-search:focus {
+      border-color: var(--primary);
+    }
+
+    .dropdown-search::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .dropdown-list {
+      overflow-y: auto;
+      max-height: 260px;
+      padding: 4px 0;
+    }
+
+    .dropdown-category {
+      padding: 6px 14px 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-tertiary);
+    }
+
+    .dropdown-item {
+      padding: 9px 14px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropdown-item:hover {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+
+    .dropdown-item.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .dropdown-item .item-icon {
+      font-size: 15px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .dropdown-item.custom-option {
+      border-top: 1px solid var(--border-main);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .dropdown-empty {
+      padding: 20px 14px;
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    /* Added allowance row */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -655,29 +751,40 @@
       }
     }
 
-    .custom-allowance-row .custom-name-input {
-      flex: 1;
-      padding: 10px 12px;
-      border: 1.5px solid var(--border-main);
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: var(--font);
-      color: var(--text-primary);
-      background: #fff;
-      transition: border-color 0.2s;
+    .added-allowance-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-main);
+      animation: fadeIn 0.25s ease;
     }
 
-    .custom-allowance-row .custom-name-input:focus {
+    .added-allowance-row .added-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .added-allowance-row .added-name input {
+      border: 1.5px solid var(--border-main);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: var(--font);
+      color: var(--text);
+      width: 100%;
       outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .added-allowance-row .added-name input:focus {
       border-color: var(--primary);
     }
 
-    .custom-allowance-row .custom-name-input::placeholder {
-      color: var(--text-tertiary);
-    }
-
-    .custom-allowance-row .allowance-input-container {
-      width: 160px;
+    .added-allowance-row .allowance-input-container {
+      width: 150px;
       flex-shrink: 0;
     }
 
@@ -685,16 +792,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      margin-top: 2px;
+      width: 32px;
+      height: 32px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       background: transparent;
       color: var(--text-tertiary);
       font-size: 18px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.15s;
       flex-shrink: 0;
     }
 
@@ -1078,13 +1184,22 @@
           </tbody>
         </table>
 
-        <!-- Custom allowances added dynamically -->
-        <div id="customAllowancesContainer"></div>
+        <!-- Added allowances from dropdown -->
+        <div id="addedAllowancesContainer"></div>
 
-        <button type="button" class="add-allowance-btn" onclick="addCustomAllowance()">
-          <span class="add-allowance-icon">+</span>
-          Add Custom Allowance
-        </button>
+        <div class="add-allowance-wrap" id="addAllowanceWrap">
+          <div class="dropdown-panel" id="allowanceDropdown">
+            <div class="dropdown-search-wrap">
+              <input type="text" class="dropdown-search" id="allowanceSearch" placeholder="Search allowances..."
+                oninput="filterAllowanceDropdown()">
+            </div>
+            <div class="dropdown-list" id="allowanceDropdownList"></div>
+          </div>
+          <button type="button" class="add-allowance-btn" onclick="toggleAllowanceDropdown()">
+            <span class="add-allowance-icon">+</span>
+            Add Allowance
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1149,6 +1264,63 @@
       return '€' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    // Global allowance catalog
+    const ALLOWANCE_CATALOG = [
+      {
+        category: 'Transport & Mobility', items: [
+          { id: 'travel', name: 'Travel Allowance', icon: '✈️' },
+          { id: 'car', name: 'Car Allowance', icon: '🚗' },
+          { id: 'commuter', name: 'Commuter / Transit Allowance', icon: '🚌' },
+          { id: 'parking', name: 'Parking Allowance', icon: '🅿️' },
+          { id: 'relocation', name: 'Relocation Allowance', icon: '📦' },
+        ]
+      },
+      {
+        category: 'Health & Wellbeing', items: [
+          { id: 'wellbeing', name: 'Well-being Allowance', icon: '🧘' },
+          { id: 'fitness', name: 'Fitness / Gym Allowance', icon: '💪' },
+          { id: 'health-screen', name: 'Health Screening Allowance', icon: '🏥' },
+          { id: 'mental-health', name: 'Mental Health Allowance', icon: '🧠' },
+          { id: 'childcare', name: 'Childcare Allowance', icon: '👶' },
+        ]
+      },
+      {
+        category: 'Work Setup', items: [
+          { id: 'equipment', name: 'Equipment Allowance', icon: '💻' },
+          { id: 'internet', name: 'Internet Allowance', icon: '🌐' },
+          { id: 'coworking', name: 'Co-working Space Allowance', icon: '🏢' },
+        ]
+      },
+      {
+        category: 'Education & Growth', items: [
+          { id: 'education', name: 'Education / Training Allowance', icon: '🎓' },
+          { id: 'books', name: 'Books & Learning Allowance', icon: '📚' },
+          { id: 'conference', name: 'Conference Allowance', icon: '🎤' },
+          { id: 'certification', name: 'Certification Allowance', icon: '📜' },
+        ]
+      },
+      {
+        category: 'Lifestyle', items: [
+          { id: 'meal', name: 'Meal / Food Allowance', icon: '🍽️' },
+          { id: 'clothing', name: 'Clothing / Uniform Allowance', icon: '👔' },
+          { id: 'housing', name: 'Housing Allowance', icon: '🏠' },
+          { id: 'cost-of-living', name: 'Cost of Living Adjustment', icon: '📊' },
+        ]
+      },
+      {
+        category: 'Financial', items: [
+          { id: 'sign-on', name: 'Sign-on Bonus', icon: '🤝' },
+          { id: 'retention', name: 'Retention Bonus', icon: '⭐' },
+          { id: 'performance', name: 'Performance Bonus', icon: '🏆' },
+          { id: 'profit-share', name: 'Profit Sharing', icon: '💰' },
+          { id: 'stock', name: 'Stock / Equity Allowance', icon: '📈' },
+        ]
+      },
+    ];
+
+    let addedAllowances = {}; // id -> { name, value }
+    let addedCount = 0;
+
     function recalculate() {
       const grossAnnual = parseFloat(document.getElementById('grossSalary').value) || 0;
       const grossMonthly = grossAnnual / 12;
@@ -1166,7 +1338,6 @@
       document.getElementById('tcoePanel').classList.add('visible');
       document.getElementById('tcoeFooterSection').style.display = '';
 
-      // Apply ceilings
       const pensionBase = Math.min(grossMonthly, PENSION_CEILING_MONTHLY) * 12;
       const healthBase = Math.min(grossMonthly, HEALTH_CEILING_MONTHLY) * 12;
 
@@ -1176,14 +1347,14 @@
       const care = healthBase * CARE_RATE;
       const eorFee = grossAnnual * EOR_FEE_RATE;
 
-      const totalAllowancesMonthly = Object.values(allowances).reduce((a, b) => a + b, 0);
-      const totalCustomMonthly = typeof customAllowances !== 'undefined' ? Object.values(customAllowances).reduce((a, b) => a + b, 0) : 0;
-      const totalAllowancesAnnual = (totalAllowancesMonthly + totalCustomMonthly) * 12;
+      const staticAllowancesMonthly = Object.values(allowances).reduce((a, b) => a + b, 0);
+      const addedAllowancesMonthly = Object.values(addedAllowances).reduce((a, b) => a + b.value, 0);
+      const totalAllowancesMonthly = staticAllowancesMonthly + addedAllowancesMonthly;
+      const totalAllowancesAnnual = totalAllowancesMonthly * 12;
 
       const tcoe = grossAnnual + pension + health + unemployment + care + eorFee + totalAllowancesAnnual;
       const tcoeMonthly = tcoe / 12;
 
-      // Update rows
       document.getElementById('r-gross').textContent = fmt(grossAnnual);
       document.getElementById('r-pension').textContent = fmt(pension);
       document.getElementById('r-health').textContent = fmt(health);
@@ -1208,13 +1379,11 @@
       const val = parseFloat(value) || 0;
       allowances[key] = val;
 
-      // Map keys to benchmark element ids
       const benchmarkMap = {
         'phone': 'phone-benchmark',
         'pension-allowance': 'pension-benchmark',
         'wfh': 'wfh-benchmark'
       };
-
       const inputMap = {
         'phone': 'a-phone',
         'pension-allowance': 'a-pension',
@@ -1239,46 +1408,128 @@
         if (benchmarkEl) benchmarkEl.innerHTML = '';
         if (inputEl) inputEl.classList.remove('warning-input');
       }
-
       recalculate();
     }
 
-    // Custom allowances
-    let customAllowanceCount = 0;
-    let customAllowances = {};
+    // Searchable dropdown
+    function toggleAllowanceDropdown() {
+      const panel = document.getElementById('allowanceDropdown');
+      const isOpen = panel.classList.contains('open');
+      if (isOpen) {
+        panel.classList.remove('open');
+      } else {
+        panel.classList.add('open');
+        document.getElementById('allowanceSearch').value = '';
+        renderDropdownList('');
+        setTimeout(() => document.getElementById('allowanceSearch').focus(), 50);
+      }
+    }
 
-    function addCustomAllowance() {
-      customAllowanceCount++;
-      const id = 'custom-' + customAllowanceCount;
-      customAllowances[id] = 0;
+    function filterAllowanceDropdown() {
+      const q = document.getElementById('allowanceSearch').value;
+      renderDropdownList(q);
+    }
 
-      const container = document.getElementById('customAllowancesContainer');
+    function renderDropdownList(query) {
+      const list = document.getElementById('allowanceDropdownList');
+      const q = query.toLowerCase().trim();
+      let html = '';
+      let hasResults = false;
+
+      // Track which catalog IDs are already added
+      const usedIds = new Set(Object.values(addedAllowances).map(a => a.catalogId).filter(Boolean));
+
+      ALLOWANCE_CATALOG.forEach(cat => {
+        const filtered = cat.items.filter(item => !q || item.name.toLowerCase().includes(q));
+        if (filtered.length === 0) return;
+        hasResults = true;
+        html += '<div class="dropdown-category">' + cat.category + '</div>';
+        filtered.forEach(item => {
+          const disabled = usedIds.has(item.id) ? ' disabled' : '';
+          html += '<div class="dropdown-item' + disabled + '" onclick="selectAllowance(\'' + item.id + '\', \'' + item.name.replace(/'/g, "\\'") + '\')">' +
+            '<span class="item-icon">' + item.icon + '</span>' + item.name +
+            (disabled ? ' <span style="font-size:11px;color:var(--text-tertiary);margin-left:auto;">Added</span>' : '') +
+            '</div>';
+        });
+      });
+
+      // Custom option
+      if (!q || 'custom'.includes(q) || 'other'.includes(q)) {
+        html += '<div class="dropdown-item custom-option" onclick="selectAllowance(null, null)">' +
+          '<span class="item-icon">✏️</span>Custom Allowance…</div>';
+        hasResults = true;
+      }
+
+      if (!hasResults) {
+        html = '<div class="dropdown-empty">No matching allowances.<br>' +
+          '<span onclick="selectAllowance(null, null)" style="color:var(--primary);cursor:pointer;font-weight:600;">+ Add as Custom</span></div>';
+      }
+
+      list.innerHTML = html;
+    }
+
+    function selectAllowance(catalogId, name) {
+      addedCount++;
+      const key = 'added-' + addedCount;
+      const isCustom = !catalogId;
+      addedAllowances[key] = { name: name || '', value: 0, catalogId: catalogId };
+
+      const container = document.getElementById('addedAllowancesContainer');
       const row = document.createElement('div');
-      row.className = 'custom-allowance-row';
-      row.id = 'row-' + id;
-      row.innerHTML =
-        '<input type="text" class="custom-name-input" placeholder="Allowance name (e.g. Sign-on Bonus, Relocation)">' +
+      row.className = 'added-allowance-row';
+      row.id = 'row-' + key;
+
+      let nameHtml;
+      if (isCustom) {
+        nameHtml = '<div class="added-name"><input type="text" placeholder="Enter allowance name" oninput="renameAdded(\'' + key + '\', this.value)"></div>';
+      } else {
+        nameHtml = '<div class="added-name">' + name + '</div>';
+      }
+
+      row.innerHTML = nameHtml +
         '<div class="allowance-input-container">' +
         '<span class="allowance-input-prefix">€</span>' +
-        '<input type="number" class="allowance-input" placeholder="0.00" min="0" oninput="updateCustomAllowance(\'' + id + '\', this.value)">' +
+        '<input type="number" class="allowance-input" placeholder="0.00" min="0" oninput="updateAdded(\'' + key + '\', this.value)">' +
         '<span class="allowance-input-suffix">EUR</span>' +
         '</div>' +
-        '<button type="button" class="remove-allowance-btn" onclick="removeCustomAllowance(\'' + id + '\')" title="Remove">×</button>';
+        '<button type="button" class="remove-allowance-btn" onclick="removeAdded(\'' + key + '\')" title="Remove">×</button>';
+
       container.appendChild(row);
-      row.querySelector('.custom-name-input').focus();
+
+      // Close dropdown
+      document.getElementById('allowanceDropdown').classList.remove('open');
+
+      // Focus amount (or name if custom)
+      if (isCustom) {
+        row.querySelector('.added-name input').focus();
+      } else {
+        row.querySelector('.allowance-input').focus();
+      }
     }
 
-    function updateCustomAllowance(id, value) {
-      customAllowances[id] = parseFloat(value) || 0;
+    function renameAdded(key, value) {
+      if (addedAllowances[key]) addedAllowances[key].name = value;
+    }
+
+    function updateAdded(key, value) {
+      if (addedAllowances[key]) addedAllowances[key].value = parseFloat(value) || 0;
       recalculate();
     }
 
-    function removeCustomAllowance(id) {
-      const row = document.getElementById('row-' + id);
+    function removeAdded(key) {
+      const row = document.getElementById('row-' + key);
       if (row) row.remove();
-      delete customAllowances[id];
+      delete addedAllowances[key];
       recalculate();
     }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+      const wrap = document.getElementById('addAllowanceWrap');
+      if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('allowanceDropdown').classList.remove('open');
+      }
+    });
   </script>
 
 </body>
