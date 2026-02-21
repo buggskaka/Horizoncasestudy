@@ -809,6 +809,38 @@
       color: #ef4444;
     }
 
+    /* Period toggle */
+    .period-toggle {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border-main);
+      border-radius: 20px;
+      padding: 2px;
+      gap: 0;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+
+    .period-toggle-btn {
+      padding: 4px 12px;
+      border: none;
+      border-radius: 18px;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font);
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .period-toggle-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(59, 130, 246, 0.25);
+    }
+
     /* Info callout */
     .callout {
       display: flex;
@@ -1117,7 +1149,12 @@
     <!-- Allowances -->
     <div class="section animate-in" style="animation-delay: 0.05s;">
       <div class="section-header">
-        <div class="section-title">Allowances <span class="optional-tag">(optional)</span></div>
+        <div class="section-title">Allowances <span class="optional-tag">(optional)</span>
+          <span class="period-toggle" id="periodToggle">
+            <button class="period-toggle-btn active" onclick="setPeriod('monthly')" id="btn-monthly">Monthly</button>
+            <button class="period-toggle-btn" onclick="setPeriod('yearly')" id="btn-yearly">Yearly</button>
+          </span>
+        </div>
         <div class="section-desc">If local regulations require any mandatory allowance declaration, it is already
           included in the annual gross pay. This extra allowance is for purely discretionary purposes.</div>
       </div>
@@ -1126,7 +1163,7 @@
           <thead>
             <tr>
               <th>Allowance type</th>
-              <th style="text-align:right;">Amount</th>
+              <th style="text-align:right;">Amount <span id="periodLabel">(monthly)</span></th>
             </tr>
           </thead>
           <tbody>
@@ -1321,6 +1358,20 @@
     let addedAllowances = {}; // id -> { name, value }
     let addedCount = 0;
 
+    let allowancePeriod = 'monthly'; // 'monthly' or 'yearly'
+
+    function setPeriod(p) {
+      allowancePeriod = p;
+      document.getElementById('btn-monthly').classList.toggle('active', p === 'monthly');
+      document.getElementById('btn-yearly').classList.toggle('active', p === 'yearly');
+      document.getElementById('periodLabel').textContent = p === 'monthly' ? '(monthly)' : '(yearly)';
+      // Update all suffix labels
+      document.querySelectorAll('.allowance-input-suffix').forEach(el => {
+        el.textContent = p === 'monthly' ? 'EUR' : 'EUR/yr';
+      });
+      recalculate();
+    }
+
     function recalculate() {
       const grossAnnual = parseFloat(document.getElementById('grossSalary').value) || 0;
       const grossMonthly = grossAnnual / 12;
@@ -1347,10 +1398,14 @@
       const care = healthBase * CARE_RATE;
       const eorFee = grossAnnual * EOR_FEE_RATE;
 
-      const staticAllowancesMonthly = Object.values(allowances).reduce((a, b) => a + b, 0);
-      const addedAllowancesMonthly = Object.values(addedAllowances).reduce((a, b) => a + b.value, 0);
-      const totalAllowancesMonthly = staticAllowancesMonthly + addedAllowancesMonthly;
-      const totalAllowancesAnnual = totalAllowancesMonthly * 12;
+      // If monthly, multiply by 12 to get annual; if yearly, values are already annual
+      const periodMultiplier = allowancePeriod === 'monthly' ? 12 : 1;
+
+      const staticAllowancesRaw = Object.values(allowances).reduce((a, b) => a + b, 0);
+      const addedAllowancesRaw = Object.values(addedAllowances).reduce((a, b) => a + b.value, 0);
+      const totalAllowancesRaw = staticAllowancesRaw + addedAllowancesRaw;
+      const totalAllowancesAnnual = totalAllowancesRaw * periodMultiplier;
+      const totalAllowancesMonthly = totalAllowancesAnnual / 12;
 
       const tcoe = grossAnnual + pension + health + unemployment + care + eorFee + totalAllowancesAnnual;
       const tcoeMonthly = tcoe / 12;
