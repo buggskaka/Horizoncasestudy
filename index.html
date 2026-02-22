@@ -973,6 +973,377 @@
       animation-delay: 0.14s;
     }
 
+    /* Salary Insights */
+    .insights-section {
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .insights-section.visible {
+      display: block;
+    }
+
+    .insights-header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid var(--border-main);
+    }
+
+    .insights-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .insights-header-title .insights-icon {
+      font-size: 18px;
+    }
+
+    .insights-header-sub {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    .insights-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-main);
+      padding: 0 28px;
+    }
+
+    .insights-tab {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      color: var(--text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .insights-tab:hover {
+      color: var(--text-secondary);
+    }
+
+    .insights-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .insights-panel {
+      display: none;
+      padding: 24px 28px;
+    }
+
+    .insights-panel.active {
+      display: block;
+    }
+
+    /* Market Benchmark Bar */
+    .benchmark-visual {
+      margin-bottom: 20px;
+    }
+
+    .benchmark-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .benchmark-bar-track {
+      position: relative;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 4px;
+      overflow: visible;
+    }
+
+    .benchmark-bar-range {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #dbeafe, #93c5fd);
+      border-radius: 4px;
+    }
+
+    .benchmark-bar-marker {
+      position: absolute;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      border: 3px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .benchmark-bar-median {
+      position: absolute;
+      top: -2px;
+      width: 2px;
+      height: 12px;
+      background: var(--text-tertiary);
+      border-radius: 1px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .benchmark-info-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .benchmark-info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .benchmark-info-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .benchmark-info-dot.salary {
+      background: var(--primary);
+    }
+
+    .benchmark-info-dot.range {
+      background: #93c5fd;
+    }
+
+    .benchmark-info-dot.median {
+      background: var(--text-tertiary);
+    }
+
+    .benchmark-verdict {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .benchmark-verdict.competitive {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.15);
+    }
+
+    .benchmark-verdict.below {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    .benchmark-verdict.above {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    /* Net Take-home */
+    .net-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .net-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-main);
+      font-size: 13px;
+    }
+
+    .net-row:last-child {
+      border-bottom: none;
+    }
+
+    .net-row-label {
+      color: var(--text-secondary);
+    }
+
+    .net-row-label .deduction-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .net-row-amount {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .net-row-amount.negative {
+      color: #ef4444;
+    }
+
+    .net-row.total {
+      border-top: 2px solid var(--text);
+      border-bottom: none;
+      margin-top: 4px;
+      padding-top: 14px;
+    }
+
+    .net-row.total .net-row-label {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .net-row.total .net-row-amount {
+      font-size: 18px;
+      color: var(--green);
+    }
+
+    .net-benchmark-bar {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .net-benchmark-bar strong {
+      color: var(--text);
+    }
+
+    /* Contractor comparison */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .comparison-card {
+      border: 1px solid var(--border-main);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .comparison-card.eor {
+      border-color: var(--primary-border);
+      background: #fafbff;
+    }
+
+    .comparison-card.contractor {
+      border-color: var(--border-main);
+      background: #fff;
+    }
+
+    .comparison-card-badge {
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comparison-card.eor .comparison-card-badge {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .comparison-card.contractor .comparison-card-badge {
+      background: var(--text-secondary);
+      color: #fff;
+    }
+
+    .comparison-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .comparison-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 12px;
+    }
+
+    .comparison-row-label {
+      color: var(--text-secondary);
+    }
+
+    .comparison-row-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .comparison-total {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 2px solid var(--border-strong);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .comparison-total-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comparison-total-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .comparison-note {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
     /* Responsive */
     @media (max-width: 680px) {
       .main {
@@ -1066,7 +1437,7 @@
               oninput="recalculate()">
             <span class="currency-suffix">EUR</span>
           </div>
-          <div class="field-hint">Payable in 12 months.</div>
+          <div id="salary-benchmark"></div>
         </div>
       </div>
     </div>
@@ -1079,15 +1450,19 @@
       </div>
 
       <div id="tcoeContent" style="display:none;">
-        <div class="tcoe-header">
-          <div class="tcoe-header-left">
-            <div class="tcoe-icon">€</div>
+        <div class="tcoe-header" style="flex-direction:column;align-items:stretch;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
             <div>
               <div class="tcoe-label">Total Cost of Employment</div>
               <div class="tcoe-sublabel">Germany · Updated in real time</div>
             </div>
+            <span class="period-toggle">
+              <button class="period-toggle-btn active" onclick="setTcoeView(true)" id="tcoe-btn-mo">Monthly</button>
+              <button class="period-toggle-btn" onclick="setTcoeView(false)" id="tcoe-btn-yr">Annual</button>
+            </span>
           </div>
-          <div class="tcoe-total-badge" id="tcoeBadge">€0 / mo</div>
+          <div id="tcoeBadge" style="font-size:28px;font-weight:800;color:var(--primary);padding-top:12px;">€0 <span
+              style="font-size:15px;font-weight:500;color:var(--text-tertiary);">/ mo</span></div>
         </div>
 
         <div class="tcoe-body">
@@ -1139,7 +1514,7 @@
           <div class="tcoe-row">
             <div class="tcoe-row-left">
               <div class="tcoe-row-name">EOR service fee <span class="tcoe-row-tag tag-fee">Remote People</span></div>
-              <div class="tcoe-row-detail">Based on your current plan</div>
+              <div class="tcoe-row-detail">€199/month · Flat platform fee</div>
             </div>
             <div class="tcoe-row-amount readonly" id="r-fee">€0</div>
           </div>
@@ -1298,7 +1673,7 @@
     const HEALTH_RATE = 0.073;
     const UNEMPLOYMENT_RATE = 0.013;
     const CARE_RATE = 0.017;
-    const EOR_FEE_RATE = 0.07;
+    const EOR_FEE_MONTHLY = 199;
 
     // Contribution ceilings (monthly)
     const PENSION_CEILING_MONTHLY = 7550;
@@ -1390,6 +1765,8 @@
         document.getElementById('tcoeContent').style.display = 'none';
         document.getElementById('tcoePanel').classList.remove('visible');
         document.getElementById('tcoeFooterSection').style.display = 'none';
+
+        document.getElementById('salary-benchmark').innerHTML = '';
         return;
       }
 
@@ -1405,7 +1782,7 @@
       const health = healthBase * HEALTH_RATE;
       const unemployment = pensionBase * UNEMPLOYMENT_RATE;
       const care = healthBase * CARE_RATE;
-      const eorFee = grossAnnual * EOR_FEE_RATE;
+      const eorFee = EOR_FEE_MONTHLY * 12;
 
       // If monthly, multiply by 12 to get annual; if yearly, values are already annual
       const periodMultiplier = allowancePeriod === 'monthly' ? 12 : 1;
@@ -1435,9 +1812,52 @@
       }
 
       document.getElementById('tcoeFinal').textContent = fmt(tcoe);
-      document.getElementById('tcoeBadge').textContent = fmt(tcoeMonthly) + ' / mo';
+      updateTcoeDisplay(tcoe, tcoeMonthly, grossAnnual, pension, health, unemployment, care, eorFee, totalAllowancesAnnual);
       document.getElementById('tcoeAnnual').textContent = fmt(tcoe) + ' per year';
+
+      // Salary market benchmark
+      const bmEl = document.getElementById('salary-benchmark');
+      if (grossAnnual < 52000) {
+        bmEl.innerHTML = '<span class="benchmark-pill low"><span class="benchmark-dot"></span>Below market range (€52,000 – €82,000/yr)</span>';
+      } else if (grossAnnual <= 82000) {
+        bmEl.innerHTML = '<span class="benchmark-pill ok"><span class="benchmark-dot"></span>Within market range</span>';
+      } else {
+        bmEl.innerHTML = '<span class="benchmark-pill ok"><span class="benchmark-dot"></span>Above market range</span>';
+      }
+
     }
+
+    // ── TCOE Annual/Monthly Toggle ──
+    let tcoeViewMonthly = true;
+    let lastTcoeValues = {};
+
+    function setTcoeView(isMonthly) {
+      tcoeViewMonthly = isMonthly;
+      document.getElementById('tcoe-btn-mo').classList.toggle('active', isMonthly);
+      document.getElementById('tcoe-btn-yr').classList.toggle('active', !isMonthly);
+      if (lastTcoeValues.tcoe) {
+        updateTcoeDisplay(lastTcoeValues.tcoe, lastTcoeValues.tcoeMonthly, lastTcoeValues.gross, lastTcoeValues.pension, lastTcoeValues.health, lastTcoeValues.unemployment, lastTcoeValues.care, lastTcoeValues.eorFee, lastTcoeValues.allowances);
+      }
+    }
+
+    function updateTcoeDisplay(tcoe, tcoeMonthly, gross, pension, health, unemployment, care, eorFee, allowances) {
+      lastTcoeValues = { tcoe, tcoeMonthly, gross, pension, health, unemployment, care, eorFee, allowances };
+      const d = tcoeViewMonthly ? 12 : 1;
+      const suffix = tcoeViewMonthly ? ' / mo' : ' / yr';
+
+      document.getElementById('tcoeBadge').innerHTML = fmt(tcoeViewMonthly ? tcoeMonthly : tcoe) + ' <span style="font-size:15px;font-weight:500;color:var(--text-tertiary);">' + suffix + '</span>';
+      document.getElementById('r-gross').textContent = fmt(gross / d);
+      document.getElementById('r-pension').textContent = fmt(pension / d);
+      document.getElementById('r-health').textContent = fmt(health / d);
+      document.getElementById('r-unemployment').textContent = fmt(unemployment / d);
+      document.getElementById('r-care').textContent = fmt(care / d);
+      document.getElementById('r-fee').textContent = fmt(eorFee / d);
+
+      if (allowances > 0) {
+        document.getElementById('r-allowances').textContent = fmt(allowances / d);
+      }
+    }
+
 
     function updateAllowance(key, value, marketMin, marketMax) {
       const val = parseFloat(value) || 0;
